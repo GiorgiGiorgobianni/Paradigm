@@ -1,0 +1,41 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char* vehicleInfo(int year, int mileage, const char* model){
+    char year_str[12];
+    char mileage_str[12];
+    
+    snprintf(year_str, sifeof(year_str), "%d", year);
+    snprintf(mileage_str, sifeof(mileage_str), "%d", mileage);
+    
+    size_t total_len = strlen(year_str) + strlen(mileage_str) + strlen(model) + 1;
+    
+    char* result = (char*)malloc(total_len);
+    if (!result) return NULL;
+    
+    strcpy(result, year_str);
+    strcat(result, mileage_str);
+    strcat(result, model);
+    
+    return result;
+}
+
+int main() {
+    int test_year = 2020;
+    int test_mileage = 45000;
+    const char* test_model = "ToyotaCorolla";
+
+    // Get vehicle info
+    char* vehicle_info = fillVehicleInfo(test_year, test_mileage, test_model);
+    
+    if (vehicle_info) {
+        printf("Combined Vehicle Info: %s\n", vehicle_info);
+        free(vehicle_info);  // Release memory
+    } else {
+        printf("Memory allocation failed!\n");
+    }
+
+    return 0;
+}
