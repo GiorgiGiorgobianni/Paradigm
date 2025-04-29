@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// The mapper function (same as before)
+void map(void* src, void* dest, size_t num_elements, size_t element_size, 
+         void (*mapper_func)(void*, void*)) {
+    char* src_bytes = (char*)src;
+    char* dest_bytes = (char*)dest;
+    
+    for (size_t i = 0; i < num_elements; i++) {
+        void* current_src = src_bytes + (i * element_size);
+        void* current_dest = dest_bytes + (i * element_size);
+        mapper_func(current_src, current_dest);
+    }
+}
+
+// Your custom function to double integers
+void double_int(void* in, void* out) {
+    int* input = (int*)in;
+    int* output = (int*)out;
+    *output = (*input) * 2;  // Double the value
+}
+
+int main() {
+    // Original array
+    int numbers[] = {1, 2, 3, 4, 5};
+    size_t count = sizeof(numbers) / sizeof(numbers[0]);
+    
+    // Destination array
+    int doubled_numbers[count];
+    
+    // Call map with your custom function
+    map(numbers, doubled_numbers, count, sizeof(int), double_int);
+    
+    // Print results
+    printf("Original: ");
+    for (size_t i = 0; i < count; i++) {
+        printf("%d ", numbers[i]);
+    }
+    
+    printf("\nDoubled:  ");
+    for (size_t i = 0; i < count; i++) {
+        printf("%d ", doubled_numbers[i]);
+    }
+    printf("\n");
+    
+    return 0;
+}
