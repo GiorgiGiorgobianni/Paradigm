@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+/**
+ * Attempts to append a new value to an integer array.
+ * 
+ * @param arr The integer array
+ * @param size Pointer to the current size of the array (will be updated if append succeeds)
+ * @param capacity The total capacity of the array (maximum number of elements it can hold)
+ * @param new_value The new value to append
+ * @return true if append succeeded, false if array was full
+ */
+bool append_int(int arr[], int* size, int capacity, int new_value) {
+    if (*size >= capacity) {
+        return false;  // Array is full, can't append
+    }
+    
+    arr[*size] = new_value;
+    (*size)++;
+    return true;
+}
+
+// Example usage:
+int main() {
+    const int capacity = 5;
+    int arr[capacity] = {1, 2, 3};
+    int size = 3;
+    
+    if (append_int(arr, &size, capacity, 4)) {
+        printf("Append successful. New size: %d\n", size);
+    } else {
+        printf("Append failed - array full.\n");
+    }
+    
+    // Print array contents
+    printf("Array contents: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    
+    return 0;
+}
